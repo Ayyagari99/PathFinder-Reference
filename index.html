@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<!-- imported css files --> 
+
+	<title>myPath</title>
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="styles/magic.min.css">
+	<script src="https://kit.fontawesome.com/d1f3dd87b7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<!-- this creates the navigation bar-->
+
+	<nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark" id="myNavbar">
+	<a class="navbar-brand" href="#" id="logo">Bacho!</a>
+
+
+
+<!-- this creates the buttons in the navigation bar-->
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    	<ul class="navbar-nav mr-auto">
+	      	<li class="nav-item dropdown" id="algorithms">
+        	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          	Algorithms
+        	</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">A*</a>
+						<a class="dropdown-item" href="#">Dijkstra</a>
+						<a class="dropdown-item" href="#">Greedy Best-First Search</a>
+					    <a class="dropdown-item" href="#">Breadth-First Search (BFS)</a>
+					    <a class="dropdown-item" href="#">Depth-First Search (DFS)</a>
+					    <a class="dropdown-item" href="#">Jump Point Search</a>
+					</div>
+		      	</li>
+		 
+	    	</ul>
+	      	<button class="btn btn-outline-success btn-space" type="submit" id="startBtn">Start</button>
+	      	<button type="button" class="btn btn-outline-warning btn-space" type="submit" id="clearBtn">Clear Board</button>
+	      	
+  		</div>
+	</nav>
+
+
+
+
+<!-- this creates the table or grid-->
+
+ 	<div class="d-flex flex-column align-items-center" id="bigTableContainer">
+		<div id="tableContainer"></div>
+		</div>
+ 	<div class="d-flex flex-row m-4 justify-content-center"> 
+		 
+
+<!-- imported javascript files -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+<!-- javascript files we have to write-->
+	<script type="text/javascript" src="script.js"></script>
+
+
+</body>
+</html>
