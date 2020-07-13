@@ -1,15 +1,19 @@
 var maxRows = 15; //It denotes the total number of rows
 var maxCols = 35; //It denotes the total number of columns
 var source = [7, 10]; //It points to the source cell
-var destination = [5, 20]; //It points to the destination cell
+var destination = [4, 30]; //It points to the destination cell
+var checkpoint1 = [3, 60]; //It points to the checkpoint1 cell
 var movingSrc = false; //whether the source is moving or not
 var movingDest = false; ////whether the destination is moving or not
+var movingCheck1 = false; ////whether the checkpoint1 is moving or not
 var algo = null;
 var ongoing = false; //It check if the algo is in process ot not
 var makeWalls = false;
 var cellsToAnimate = [];
 var justFinished = false;
 var animationState = null;
+var cellsNotToAnimate = [];
+var animateFirstOrSecond = false;
 
 //************************************ 
 //Function to generate a grid
@@ -42,10 +46,15 @@ function moveStartOrEnd(prevIndex, newIndex, startOrEnd) {
     if (startOrEnd == "start") {
         source = [updatedX, updatedY];
         console.log("Updated source is at [" + updatedX + ", " + updatedY + "]")
-    } else {
+    } else if (startOrEnd == "end") {
         destination = [updatedX, updatedY];
         console.log("Updated destination is at [" + updatedX + ", " + updatedY + "]")
+    } else if (startOrEnd == "check1") {
+        checkpoint1 = [updatedX, updatedY];
+        console.log("Updated checkpoint1 is at [" + updatedX + ", " + updatedY + "]")
     }
+
+
     clearBoard(keepWalls = true); //if we move the nodes after running the algos then it clears the board and move the nodes
     return;
 }
@@ -85,7 +94,9 @@ function executeAlgo() {
     if (algo == "Dijkstra") {
         var pathFound = dijkstra();
     } else if (algo == "Breadth-First Search (BFS)") {
-        var pathFound = bfs(false);
+        var pathFound1 = bfsFromStoC(false);
+        var pathFound2 = bfsFromCtoD(false);
+        var pathFound=pathFound1+pathFound2;
     }
     return pathFound;
 }
@@ -190,16 +201,35 @@ async function animateCells() {
     var cells = $("#tableHolder").find("td");
     var startCellIndex = (source[0] * (maxCols)) + source[1];
     var endCellIndex = (destination[0] * (maxCols)) + destination[1];
+    var checkpoint1Index = (checkpoint1[0] * (maxCols)) + checkpoint1[1];
+
     var delay = getDelay();
     for (var i = 0; i < cellsToAnimate.length; i++) {
         var cellCoordinates = cellsToAnimate[i][0];
         var x = cellCoordinates[0];
         var y = cellCoordinates[1];
         var num = (x * (maxCols)) + y;
-        if (num == startCellIndex || num == endCellIndex) { continue; }
+
+        if (num == startCellIndex || num == endCellIndex || num == checkpoint1Index ) { continue; }
         var cell = cells[num];
         var colorClass = cellsToAnimate[i][1];
+        
+        /*cellsNotToAnimate[i][1]=cellsToAnimate[i][1]; //giving the cells which are already animated to the cellsNotToAnimate array so that those cells do not get animated again
+        var x=checkpoint1Index;
+        if(bfsCtoD){
+        while(! cellsNotToAnimate[i][1] && (x<=endCellIndex)){       //this loops runs till we do not encounter the already animated cells
+            var cellCoordinates = cellsToAnimate[i][0];
+            var x = cellCoordinates[0];
+            var y = cellCoordinates[1];
+            var num = (x * (maxCols)) + y;
 
+            if (num == startCellIndex || num == endCellIndex || num == checkpoint1Index ) { continue; }
+            var cell = cells[num];
+            var colorClass = cellsToAnimate[i][1];
+
+            x++;
+        }
+    }*/
         // Wait until its time to animate
         await new Promise(resolve => setTimeout(resolve, delay));
 
@@ -223,6 +253,7 @@ function clearBoard(keepWalls) {
     var cells = $("#tableHolder").find("td");
     var startCellIndex = (source[0] * (maxCols)) + source[1];
     var endCellIndex = (destination[0] * (maxCols)) + destination[1];
+    var checkpoint1Index = (checkpoint1[0] * (maxCols)) + checkpoint1[1];
     for (var i = 0; i < cells.length; i++) {
         isWall = $(cells[i]).hasClass("wall");
         $(cells[i]).removeClass();
@@ -230,6 +261,8 @@ function clearBoard(keepWalls) {
             $(cells[i]).addClass("start");
         } else if (i == endCellIndex) {
             $(cells[i]).addClass("end");
+        } else if (i == checkpoint1Index) {
+            $(cells[i]).addClass("check1");
         } else if (keepWalls && isWall) {
             $(cells[i]).addClass("wall");
         }
@@ -240,33 +273,24 @@ function clearBoard(keepWalls) {
 clearBoard();
 
 
-document.getElementById("many").addEventListener("click", myFunction);
+document.getElementById("single").addEventListener("click", singleD);
+document.getElementById("many").addEventListener("click", manyD);
 
-function myFunction() {
+function singleD() {
+    // alert("Hello World!");
+    window.location.replace("singleDestination.html");
+}
+
+function manyD() {
     // alert("Hello World!");
     window.location.replace("manyDestinations.html");
 }
 
 
 
-
-
-$('#myModal').on('shown.bs.modal', function() {
-    $('#myInput').trigger('focus');
-})
-
-$(window).on('load', function() {
-    $('#exampleModalLong').modal('show');
-});
-
 //Javascript file to include mouse functions
-document.write('<script type="text/javascript" src="Javascript files/mouse_functions.js" ></script>');
+document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/mouse_functionsC.js" ></script>');
 
-// //Javascript file to include Breadth First Search algo
-// document.write('<script type="text/javascript" src="Javascript files/bfs_algo.js" ></script>');
 
-//Javascript file to include Dijkstra algo
-document.write('<script type="text/javascript" src="Javascript files/dijkstra_algo.js" ></script>');
-
-//Javascript file to include Dijkstra algo
-document.write('<script type="text/javascript" src="Javascript files/bfs_new.js" ></script>');
+//Javascript file to include Bfs algo
+document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/bfs_on_checkpoint.js" ></script>');

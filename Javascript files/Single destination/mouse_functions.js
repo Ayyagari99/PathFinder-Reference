@@ -93,3 +93,8 @@ $( "#algorithms .dropdown-item").click(function(){
 	updateStart();
 	console.log("Algorithm has been changd to: " + algo);
 });
+$( "#new-features .dropdown-item").click(function(){
+	if ( ongoing ){ update("wait"); return; }
+	feature = $(this).text();
+	console.log("Feature has been changd to: " + feature);
+});

@@ -106,6 +106,10 @@ ul {
     /*background-image: url('images/water.jpg');
 	background-size: cover; */
 }
+.check1{
+    background-color: purple;
+    border-color: purple;
+}
 
 #holder {
     width: 85%;
